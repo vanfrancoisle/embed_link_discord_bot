@@ -1,6 +1,15 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const dotenv = require("dotenv");
 const express = require("express");
+const app = express();
+
+app.listen(3000, () => {
+  console.log("Project is running!");
+});
+
+app.get("/", (req, res) => {
+  res.send("Bot is running!");
+});
 
 dotenv.config();
 
