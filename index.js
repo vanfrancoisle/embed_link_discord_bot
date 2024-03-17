@@ -2,7 +2,6 @@ const { Client, GatewayIntentBits } = require("discord.js");
 const dotenv = require("dotenv");
 const express = require("express");
 const app = express();
-const keep_alive = require("./keep_alive.js");
 
 app.listen(3000, () => {
   console.log("Project is running!");
