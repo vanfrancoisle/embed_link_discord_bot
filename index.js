@@ -1,7 +1,10 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const dotenv = require("dotenv");
 const express = require("express");
+<<<<<<< HEAD
 const axios = require("axios");
+=======
+>>>>>>> parent of 46f7b99 (refactor: add console log debug)
 const app = express();
 
 app.listen(3000, () => {
@@ -112,6 +115,7 @@ async function convertUrl(messageContent, urlPattern, newDomain) {
         if (newPath) {
           const urlAvecDomaine = newPath;
           const urlObjet = new URL(urlAvecDomaine);
+<<<<<<< HEAD
           const options = {
             method: "GET",
             url: "https://tiktok-video-no-watermark2.p.rapidapi.com/",
@@ -155,6 +159,14 @@ async function convertUrl(messageContent, urlPattern, newDomain) {
           } catch (error) {
             console.error(error);
           }
+=======
+          path = urlObjet.pathname + urlObjet.search + urlObjet.hash;
+          if (path.startsWith("/")) {
+            path = path.substring(1);
+          }
+          const newUrl = `${newDomain}${path}`;
+          newUrls.push(newUrl);
+>>>>>>> parent of 46f7b99 (refactor: add console log debug)
         }
       } catch (error) {
         console.error("Error getting video URL:", error);
