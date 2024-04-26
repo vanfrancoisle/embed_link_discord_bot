@@ -1,10 +1,6 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const dotenv = require("dotenv");
 const express = require("express");
-<<<<<<< HEAD
-const axios = require("axios");
-=======
->>>>>>> parent of 46f7b99 (refactor: add console log debug)
 const app = express();
 
 app.listen(3000, () => {
@@ -115,58 +111,12 @@ async function convertUrl(messageContent, urlPattern, newDomain) {
         if (newPath) {
           const urlAvecDomaine = newPath;
           const urlObjet = new URL(urlAvecDomaine);
-<<<<<<< HEAD
-          const options = {
-            method: "GET",
-            url: "https://tiktok-video-no-watermark2.p.rapidapi.com/",
-            params: {
-              url: urlObjet.href,
-              hd: "1",
-            },
-            headers: {
-              "X-RapidAPI-Key": process.env.RAPID_API_TOKEN,
-              "X-RapidAPI-Host": process.env.RAPID_API_HOST,
-            },
-          };
-
-          try {
-            const response = await axios.request(options);
-
-            // cast to short url
-            const url = response.data.data.play;
-
-            const headers = {
-              accept: "application/json",
-            };
-
-            const params = {
-              api_token: process.env.TINYURL_TOKEN,
-            };
-
-            const data = {
-              url: url,
-              domain: "tinyurl.com",
-            };
-
-            const responseTiny = await axios.post(
-              "https://api.tinyurl.com/create",
-              data,
-              { params, headers },
-            );
-            const jsonblob = responseTiny.data;
-            const tinyurl = jsonblob.data.tiny_url;
-            newUrls.push(tinyurl);
-          } catch (error) {
-            console.error(error);
-          }
-=======
           path = urlObjet.pathname + urlObjet.search + urlObjet.hash;
           if (path.startsWith("/")) {
             path = path.substring(1);
           }
           const newUrl = `${newDomain}${path}`;
           newUrls.push(newUrl);
->>>>>>> parent of 46f7b99 (refactor: add console log debug)
         }
       } catch (error) {
         console.error("Error getting video URL:", error);
