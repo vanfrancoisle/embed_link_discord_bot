@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const dotenv = require("dotenv");
 const express = require("express");
+const axios = require('axios');
 const app = express();
 
 app.listen(3000, () => {
@@ -106,15 +107,18 @@ async function convertUrl(messageContent, urlPattern, newDomain) {
     let [, subdomain, path] = match;
     const tiktokUrl = new URL(match);
     if (tiktokUrl.hostname.includes("tiktok")) {
+      console.log();
       try {
         const newPath = await getVideoUrl(match[0]);
         if (newPath) {
           const urlAvecDomaine = newPath;
           const urlObjet = new URL(urlAvecDomaine);
+          console.log('url objet', urlObjet);
           path = urlObjet.pathname + urlObjet.search + urlObjet.hash;
           if (path.startsWith("/")) {
             path = path.substring(1);
           }
+          console.log('path');
           const newUrl = `${newDomain}${path}`;
           newUrls.push(newUrl);
         }
