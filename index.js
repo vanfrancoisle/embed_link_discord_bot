@@ -107,20 +107,58 @@ async function convertUrl(messageContent, urlPattern, newDomain) {
     let [, subdomain, path] = match;
     const tiktokUrl = new URL(match);
     if (tiktokUrl.hostname.includes("tiktok")) {
-      console.log();
       try {
         const newPath = await getVideoUrl(match[0]);
         if (newPath) {
           const urlAvecDomaine = newPath;
           const urlObjet = new URL(urlAvecDomaine);
-          console.log('url objet', urlObjet);
+          const options = {
+            method: "GET",
+            url: "https://tiktok-video-no-watermark2.p.rapidapi.com/",
+            params: {
+              url: urlObjet.href,
+              hd: "1",
+            },
+            headers: {
+              "X-RapidAPI-Key": process.env.RAPID_API_TOKEN,
+              "X-RapidAPI-Host": process.env.RAPID_API_HOST,
+            },
+          };
+
+          try {
+            const response = await axios.request(options);
+
+            // cast to short url
+            const url = response.data.data.play;
+
+            const headers = {
+              accept: "application/json",
+            };
+
+            const params = {
+              api_token: process.env.TINYURL_TOKEN,
+            };
+
+            const data = {
+              url: url,
+              domain: "tinyurl.com",
+            };
+
+            const responseTiny = await axios.post(
+              "https://api.tinyurl.com/create",
+              data,
+              { params, headers },
+            );
+            const jsonblob = responseTiny.data;
+            const tinyurl = jsonblob.data.tiny_url;
+            newUrls.push(tinyurl);
+          } catch (error) {
+            console.error(error);
+          }
           path = urlObjet.pathname + urlObjet.search + urlObjet.hash;
           if (path.startsWith("/")) {
             path = path.substring(1);
           }
-          console.log('path');
-          const newUrl = `${newDomain}${path}`;
-          newUrls.push(newUrl);
         }
       } catch (error) {
         console.error("Error getting video URL:", error);
