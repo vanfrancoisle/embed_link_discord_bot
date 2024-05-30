@@ -61,7 +61,7 @@ async function convertAllUrls(messageContent) {
   const urlConversions = [
     {
       urlPattern: /https?:\/\/([\w\-]+\.)?tiktok\.com\/([^\s]*)/g,
-      newDomain: "https://vxtiktok.com/",
+      newDomain: "https://www.vxtiktok.com/",
     },
     {
       urlPattern: /https?:\/\/([\w\-]+\.)?instagram\.com\/([^\s]*)/g,
@@ -111,7 +111,7 @@ async function convertUrl(messageContent, urlPattern, newDomain) {
         if (newPath) {
           const urlAvecDomaine = newPath;
           const urlObjet = new URL(urlAvecDomaine);
-          path = urlObjet.pathname + urlObjet.hash;
+          path = urlObjet.pathname + urlObjet.search + urlObjet.hash;
           if (path.startsWith("/")) {
             path = path.substring(1);
           }
