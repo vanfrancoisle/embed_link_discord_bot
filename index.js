@@ -111,7 +111,7 @@ async function convertUrl(messageContent, urlPattern, newDomain) {
         if (newPath) {
           const urlAvecDomaine = newPath;
           const urlObjet = new URL(urlAvecDomaine);
-          path = urlObjet.pathname + urlObjet.search + urlObjet.hash;
+          path = urlObjet.pathname + urlObjet.hash;
           if (path.startsWith("/")) {
             path = path.substring(1);
           }
